@@ -13,7 +13,17 @@ def index():
 
 @app.route('/<id>')
 def get_bin(id):
-    return db.can_datas.find_one({"_id": ObjectId(id)})
+    can = db.can_datas.find_one({"_id": ObjectId(id)})
+    can = {
+        "Breaks in 24 Hours" : can["Breaks in 24 Hours"],
+        "Breaks" : can["Breaks"],
+        "Breaks in 7 Days" : can["Breaks in 7 Days"],
+        "Location" : can["Location"],
+        "Empties" : can["Empties"],
+        "Total Breaks" : can["Empties"]
+    }
+    print(can['Breaks in 24 Hours'])
+    return can
 
 if __name__=='__main__':
     get_bin()
