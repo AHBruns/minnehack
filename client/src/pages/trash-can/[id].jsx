@@ -11,8 +11,8 @@ const getDescriptor = length => {
 
 export const Details = ({}) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
   const [data, setData] = useState(undefined);
+  const [otherCans, setOtherCans] = useState([]);
   useEffect(() => {
     (async () => {
       if (router.query.id === undefined) return;
@@ -25,9 +25,32 @@ export const Details = ({}) => {
         latitude: resp.data.Location[0],
         longitude: resp.data.Location[1]
       });
-      console.log("loaded!");
     })();
   }, [router.query.id]);
+  useEffect(() => {
+    setInterval(async () => {
+      console.log("running interval");
+      // console.log(otherCans, data);
+      try {
+        if (router.query.id === undefined) return;
+        const resp = await axios.get(
+          `http://127.0.0.1:5000/${router.query.id}`,
+          {
+            headers: { "Access-Control-Allow-Origin": "*" }
+          }
+        );
+        setData(resp.data);
+        const resp2 = await axios.get(`http://127.0.0.1:5000/all`, {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        });
+        console.log(resp2.data);
+        setOtherCans(resp2.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }, 2000);
+  }, [router.query.id]);
+
   const [isMinimized, setIsMinimized] = useState(false);
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -40,8 +63,6 @@ export const Details = ({}) => {
     "pk.eyJ1IjoidG9wbCIsImEiOiJjazUycjRteXkwMHQwM2tyNXlyZWV6c21mIn0.qa9ZJMXqGBgfT--iIqn80w";
 
   if (data === undefined) return <div>loading</div>;
-
-  console.log(data);
 
   return (
     <>
@@ -61,10 +82,11 @@ export const Details = ({}) => {
           onViewportChange={setViewport}
           mapboxApiAccessToken={TOKEN}
         >
-          {[data.Location].map((cords, _) => (
+          {otherCans.map((can, _) => (
             <Marker
-              latitude={cords[0]}
-              longitude={cords[1]}
+              key={JSON.stringify(can)}
+              latitude={can.Location[0]}
+              longitude={can.Location[1]}
               offsetTop={-34}
               offsetLeft={-14}
             >
@@ -75,22 +97,21 @@ export const Details = ({}) => {
                   width: "28px",
                   height: "34px",
                   cursor: "pointer",
-                  ...(isMinimized
+                  ...(isMinimized && can.Full
+                    ? {
+                        filter:
+                          "drop-shadow(0 2px 5px rgba(150, 0, 0, 0.5)) drop-shadow(0 0px 2px rgba(150, 0, 0, 0.75))"
+                      }
+                    : isMinimized
                     ? {
                         filter:
                           "drop-shadow(0 2px 5px rgba(0, 150, 0, 0.5)) drop-shadow(0 0px 2px rgba(0, 150, 0, 0.75))"
                       }
                     : {})
                 }}
-                onClick={async () => {
-                  const resp = (
-                    await axios.get(
-                      `https://geocode.xyz/${cords[0]},${cords[1]}?geoit=json`
-                    )
-                  ).data;
-                  alert(
-                    `This trash can's location is: ${resp.stnumber} ${resp.staddress}`
-                  );
+                onClick={() => {
+                  console.log(can._id);
+                  router.push(`/trash-can/${can._id["$oid"]}`);
                 }}
               >
                 🗑
@@ -130,19 +151,18 @@ export const Details = ({}) => {
                 <div className="metrics-wrapper">
                   <h2 className="breaks-24-hours metric">
                     Last 24 Hours:{" "}
-                    {data["Breaks in 24 Hours"]
+                    {/* {data["Breaks in 24 Hours"]
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
                   </h2>
                   <div className="metric-spacer" />
                   <h2 className="breaks-7-days metric">
                     Last 7 Days:{" "}
-                    {data["Breaks in 7 Days"]
+                    {/* {data["Breaks in 7 Days"]
                       .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} */}
                   </h2>
                   <div className="metric-spacer" />
-
                   <h2 className="all-breaks metric">
                     Total:{" "}
                     {data.Breaks.length
@@ -159,9 +179,9 @@ export const Details = ({}) => {
               <div className="breaks">
                 <h1 className="heading">Breaks</h1>
                 <ol className="list">
-                  {data.Breaks.map(b => {
+                  {data.Breaks.map((b, i) => {
                     return (
-                      <li className="line-item">
+                      <li className="line-item" key={i}>
                         Something {getDescriptor(b[1])} was thrown away on{" "}
                         {new Date(b[0]).toDateString()}
                       </li>
