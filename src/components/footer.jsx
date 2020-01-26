@@ -24,6 +24,7 @@ export const Footer = ({}) => {
         }
         .logo {
           font-size: 3vh;
+          filter: drop-shadow(0 0 10px white) drop-shadow(0 0 10px white);
         }
         .wrapper {
           border-top: 2px solid black;

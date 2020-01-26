@@ -25,6 +25,7 @@ export const App = ({ Component, pageProps }) => {
         #__next {
           margin: 0;
           min-height: 100vh;
+          background-color: rgb(245, 245, 245);
         }
         .spacer {
           flex: 1;

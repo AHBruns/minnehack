@@ -18,6 +18,9 @@ export const Header = ({}) => {
         <Link href="/about">
           <a className="link">About</a>
         </Link>
+        <Link href="/search">
+          <a className="link">Search</a>
+        </Link>
       </nav>
       <style jsx>{`
         .link {
@@ -28,7 +31,7 @@ export const Header = ({}) => {
           font-size: 2vh;
         }
         .link:hover {
-          background-color: rgba(0, 150, 0, 0.75);
+          background-color: rgba(255, 255, 255, 0.25);
         }
         .logo {
           display: inline-block;
@@ -37,6 +40,7 @@ export const Header = ({}) => {
           color: black;
           font-size: 5vh;
           padding-left: 15px;
+          filter: drop-shadow(0 0 10px white) drop-shadow(0 0 10px white);
         }
         .wrapper {
           border-bottom: 2px solid black;
