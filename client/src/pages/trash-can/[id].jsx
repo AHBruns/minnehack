@@ -15,12 +15,15 @@ export const Details = ({}) => {
   const [data, setData] = useState(undefined);
   useEffect(() => {
     (async () => {
-      const resp = await axios.get(`http://127.0.0.1:5000/${router.query.id}`);
+      if (router.query.id === undefined) return;
+      const resp = await axios.get(`http://127.0.0.1:5000/${router.query.id}`, {
+        headers: { "Access-Control-Allow-Origin": "*" }
+      });
       setData(resp.data);
       setViewport({
         ...viewport,
-        latitude: resp.data.location[0],
-        longitude: resp.data.location[1]
+        latitude: resp.data.Location[0],
+        longitude: resp.data.Location[1]
       });
       console.log("loaded!");
     })();
@@ -37,6 +40,8 @@ export const Details = ({}) => {
     "pk.eyJ1IjoidG9wbCIsImEiOiJjazUycjRteXkwMHQwM2tyNXlyZWV6c21mIn0.qa9ZJMXqGBgfT--iIqn80w";
 
   if (data === undefined) return <div>loading</div>;
+
+  console.log(data);
 
   return (
     <>
@@ -56,7 +61,7 @@ export const Details = ({}) => {
           onViewportChange={setViewport}
           mapboxApiAccessToken={TOKEN}
         >
-          {[data?.location].map((cords, _) => (
+          {[data.Location].map((cords, _) => (
             <Marker
               latitude={cords[0]}
               longitude={cords[1]}
@@ -125,7 +130,7 @@ export const Details = ({}) => {
                 <div className="metrics-wrapper">
                   <h2 className="breaks-24-hours metric">
                     Last 24 Hours:{" "}
-                    {data["Breaks In 24 Hours"]
+                    {data["Breaks in 24 Hours"]
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </h2>

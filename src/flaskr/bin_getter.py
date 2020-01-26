@@ -1,8 +1,12 @@
 from bson.objectid import ObjectId
 from flask import Flask
 from pymongo import MongoClient
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 client = MongoClient('mongodb+srv://moon-emoji:moonemojiftw123@cluster0-wyzvi.mongodb.net/test?retryWrites=true&w=majority')
 db = client["moon-emoji"]
 #id = "5e2d14eaa1a3b2634647c92a"
