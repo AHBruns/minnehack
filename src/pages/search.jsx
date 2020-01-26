@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export const Search = ({}) => {
   const [state, setState] = useState({
@@ -9,6 +10,9 @@ export const Search = ({}) => {
 
   return (
     <>
+      <Head>
+        <title>Moon Emoji | Search</title>
+      </Head>
       <div className="spacer" />
       <div className="container">
         <label className="input-label">What's your trash can's code?</label>

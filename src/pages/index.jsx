@@ -5,7 +5,7 @@ export const Index = ({}) => {
   return (
     <>
       <Head>
-        <title>Minnehack</title>
+        <title>Moon Emoji | Home</title>
       </Head>
     </>
   );

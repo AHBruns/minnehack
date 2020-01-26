@@ -11,6 +11,10 @@ export const App = ({ Component, pageProps }) => {
           href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://api.tiles.mapbox.com/mapbox-gl-js/v<YOUR_MAPBOX_VERSION>/mapbox-gl.css"
+          rel="stylesheet"
+        />
       </Head>
       <Header />
       <Component {...pageProps} />

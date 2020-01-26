@@ -10,7 +10,7 @@ export const Footer = ({}) => {
           <a className="logo">🌚</a>
         </Link>
         <Link href="/">
-          <a>Team Moon Emoji FTW</a>
+          <a className="text">Team Moon Emoji FTW</a>
         </Link>
         <div className="spacer" />
       </nav>
@@ -28,6 +28,7 @@ export const Footer = ({}) => {
         }
         .wrapper {
           border-top: 2px solid black;
+          z-index: 1;
         }
         nav {
           display: flex;
@@ -36,7 +37,7 @@ export const Footer = ({}) => {
           background-color: rgba(0, 150, 0, 0.5);
         }
         .spacer {
-          flex: 1;
+          flex: 2;
         }
       `}</style>
     </div>

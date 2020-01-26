@@ -44,6 +44,7 @@ export const Header = ({}) => {
         }
         .wrapper {
           border-bottom: 2px solid black;
+          z-index: 1;
         }
         nav {
           display: flex;
