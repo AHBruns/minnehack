@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -558,14 +558,14 @@ var styles = {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!******************************************************!*\
   !*** multi ./node_modules/next/dist/pages/_error.js ***!
   \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/kaleniommazzo/Desktop/mh2020/minnehack/node_modules/next/dist/pages/_error.js */"./node_modules/next/dist/pages/_error.js");
+module.exports = __webpack_require__(/*! /Users/vonnegut/drive/minnehack/node_modules/next/dist/pages/_error.js */"./node_modules/next/dist/pages/_error.js");
 
 
 /***/ }),
