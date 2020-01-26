@@ -10,7 +10,7 @@ collection = client.can_datas
 
 arduino = serial.Serial('/dev/cu.usbmodem1421', 9600, timeout=.1)
 
-id = '5e2d14eaa1a3b2634647c92a'
+id = '5e2dd242dc30bbc231aaeafe'
 isFull = False
 itemCount = 0
 
@@ -24,6 +24,17 @@ while True:
 			newItemInfo = []
 			if i == "Full.":
 				isFull = True
+				temp = db.can_datas.find_one({"_id": ObjectId(id)})
+				temp["Full"] = True
+				db.can_datas.update({"_id": ObjectId(id)}, temp)
+			if i == "emptied":
+				isFull = False
+				now = datetime.now()
+				current_time = now.strftime("%H:%M:%S")
+				db.can_datas.update({"_id": ObjectId(id)}, {'$push': {'Empties': current_time}})
+				temp = db.can_datas.find_one({"_id": ObjectId(id)})
+				temp["Full"] = False
+				db.can_datas.update({"_id": ObjectId(id)}, temp)
 			if i.isdigit() and isFull:
 				print("Bin is Full")
 				print(itemCount)
@@ -37,5 +48,5 @@ while True:
 				print(i)      #size of item aka time it took to fall past sensor
 				# break_array.append(newItemInfo)
 				db.can_datas.update({"_id": ObjectId(id)}, {'$push': {'Breaks': newItemInfo}})
-
+				db.can_datas.update_one({"_id": ObjectId(id)}, {'$inc': {'Total Breaks': 1}})
 		print(data)
