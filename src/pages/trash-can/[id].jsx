@@ -5,6 +5,7 @@ export const Details = ({}) => {
   const router = useRouter();
 
   const fakeData = {
+    trashid: 123,
     breaks24hours: 23,
     breaks7days: 147,
     allBreaks: 23460,
