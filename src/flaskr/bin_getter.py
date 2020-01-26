@@ -1,3 +1,4 @@
+from bson.json_util import dumps
 from bson.objectid import ObjectId
 from flask import Flask
 from flask_cors import CORS, cross_origin
@@ -16,7 +17,7 @@ def index():
 
 @app.route('/all')
 def get_all_cans():
-    return None
+    return dumps(db.can_datas.find(), separators=(',', ':'))
 
 @app.route('/<id>')
 def get_can(id):
