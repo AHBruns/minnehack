@@ -10,33 +10,41 @@ export const Header = ({}) => {
         </Link>
         <div className="spacer" />
         <Link href="/">
-          <a>Home</a>
+          <a className="link">Home</a>
         </Link>
         <Link href="/contact">
-          <a>Contact</a>
+          <a className="link">Contact</a>
         </Link>
         <Link href="/about">
-          <a>About</a>
+          <a className="link">About</a>
         </Link>
       </nav>
       <style jsx>{`
-        a {
+        .link {
           display: inline-block;
-          margin: 10px;
+          padding: 30px;
           text-decoration: none;
           color: black;
           font-size: 2vh;
         }
+        .link:hover {
+          background-color: rgba(0, 150, 0, 0.75);
+        }
         .logo {
+          display: inline-block;
+          padding: 10px;
+          text-decoration: none;
+          color: black;
           font-size: 5vh;
+          padding-left: 15px;
         }
         .wrapper {
-          border-bottom: 1px solid black;
+          border-bottom: 2px solid black;
         }
         nav {
           display: flex;
           align-items: center;
-          padding: 10px;
+          background-color: rgba(0, 150, 0, 0.5);
         }
         .spacer {
           flex: 1;
