@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "flask": "^0.2.10",
     "next": "^9.2.1",
     "react": "^16.12.0",
